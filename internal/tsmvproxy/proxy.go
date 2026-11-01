@@ -102,7 +102,8 @@ func (p *TSMVProxy) WatchPeersAndSelectExit(ctx context.Context, prefix string) 
 		}
 		if len(peermap) != oldCount {
 			slog.Info("available servers", "count", len(peermap))
-			continue
+		} else if len(peermap) == 0 {
+			slog.Warn("No servers found, please ensure this node has a Mullvad Add-On license")
 		}
 		needsUpdate := lastChoice == nil
 		if lastChoice != nil {
