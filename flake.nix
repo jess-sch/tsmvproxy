@@ -39,6 +39,10 @@
           config = {
             Entrypoint = [ "/bin/tsmvproxy" "--state-dir" "/data" ];
             Volumes."/data" = {};
+            Labels = {
+              "org.opencontainers.image.source" = "https://github.com/jess-sch/tsmvproxy";
+              "org.opencontainers.image.licenses" = "MIT";
+            };
           };
         };
 
