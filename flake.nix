@@ -28,6 +28,20 @@
           vendorHash = "sha256-vpY2kJWzHsqx5sp5ZXL2TGQNc9imuVwKQ6u7yMMSMv8=";
         };
 
+        packages.container = pkgs.dockerTools.buildImage {
+          name = "ghcr.io/jess-sch/tsmvproxy";
+          tag = "latest";
+          created = "now";
+          copyToRoot = with pkgs; [ iana-etc cacert self.packages."${system}".default ];
+          runAsRoot = ''
+            mkdir -p /data
+          '';
+          config = {
+            Entrypoint = [ "/bin/tsmvproxy" "--state-dir" "/data" ];
+            Volumes."/data" = {};
+          };
+        };
+
         devShells.default = pkgs.mkShell {
           hardeningDisable = [ "fortify" ];
           packages =
